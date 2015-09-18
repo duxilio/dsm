@@ -1,0 +1,34 @@
+#!/usr/bin/env node
+
+var AddCmd = require('./lib/commands/add'),
+	RmCmd = require('./lib/commands/rm'),
+	ShowCmd = require('./lib/commands/show');
+	
+var args = process.argv,
+	cmd = args[2],
+	otherArgs = args.splice(3, args.length);
+
+var errorHandler = function(err){
+	console.error(err.msg);
+	process.exit(err.exitCode);
+};
+
+switch(cmd){
+	case 'add':
+		new AddCmd(otherArgs, errorHandler);
+		break;
+
+	case 'rm':
+		new RmCmd(otherArgs, errorHandler);
+		break;
+
+	case 'show':
+		new ShowCmd(otherArgs, errorHandler);
+		break;
+
+	default:
+		console.log('Usage: dsm [add | rm | show] [args...]');
+		break;
+}
+
+process.exit(0);
