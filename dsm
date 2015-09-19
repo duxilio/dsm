@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+process.chdir(__dirname);
+
 var AddCmd = require('./lib/commands/add'),
 	RmCmd = require('./lib/commands/rm'),
 	ShowCmd = require('./lib/commands/show'),
