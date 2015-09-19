@@ -18,27 +18,31 @@ var errorHandler = function(err){
 var checkCommand = function(){
 	switch(cmd){
 		case 'add':
-			new AddCmd(otherArgs, errorHandler);
+			new AddCmd(otherArgs, errorHandler, function(exitCode){
+				process.exit(exitCode);
+			});
 			break;
 
 		case 'rm':
 			new RmCmd(otherArgs, errorHandler);
+			process.exit(0);
 			break;
 
 		case 'show':
 			new ShowCmd(otherArgs, errorHandler);
+			process.exit(0);
 			break;
 
 		case 'update':
 			git.checkUpdate();
+			process.exit(0);
 			break;
 
 		default:
 			console.log('Usage: dsm [add | rm | show] [args...]');
+			process.exit(0);
 			break;
 	}
-
-	process.exit(0);
 };
 
 checkCommand();
