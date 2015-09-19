@@ -1,11 +1,16 @@
 #!/usr/bin/env node
 process.chdir(__dirname);
 
+var execSync = require('sync-exec');
+
 var AddCmd = require('./lib/commands/add'),
 	RmCmd = require('./lib/commands/rm'),
 	ShowCmd = require('./lib/commands/show'),
 	git = require('./lib/git');
 	
+var PASSWORD = process.env.DSM_PASSWORD,
+	REMOTE_SECRETS_PATH = process.env.DSM_REMOTE_SECRETS_PATH;
+
 var args = process.argv,
 	cmd = args[2],
 	otherArgs = args.splice(3, args.length);
@@ -15,34 +20,52 @@ var errorHandler = function(err){
 	process.exit(err.exitCode);
 };
 
-var checkCommand = function(){
-	switch(cmd){
-		case 'add':
-			new AddCmd(otherArgs, errorHandler, function(exitCode){
-				process.exit(exitCode);
-			});
-			break;
+if(typeof PASSWORD !== 'string'){
+    errorHandler({
+        msg: 'DSM_PASSWORD not set',
+        exitCode: 1
+    });
+}
 
-		case 'rm':
-			new RmCmd(otherArgs, errorHandler);
+if(typeof REMOTE_SECRETS_PATH !== 'string'){
+	errorHandler({
+		msg: 'DSM_REMOTE_SECRETS_PATH not set',
+		exitCode: 1
+	});
+	return;
+}
+
+switch(cmd){
+	case 'add':
+		new AddCmd(otherArgs, errorHandler, function(exitCode){
+			process.exit(exitCode);
+		});
+		break;
+
+	case 'rm':
+		new RmCmd(otherArgs, errorHandler, function(exitCode){
+			process.exit(exitCode);
+		});
+		break;
+
+	case 'show':
+		new ShowCmd(otherArgs, errorHandler);
+		process.exit(0);
+		break;
+
+	case 'update':
+		git.checkUpdate(function(){
+			console.log(
+				execSync('cd secrets && git remote set-url origin '+REMOTE_SECRETS_PATH),
+				execSync('cd secrets && git pull origin master'),
+				execSync('cd secrets && git add :/ && git commit -m "updates secrets.json" && git push origin master')
+				);
 			process.exit(0);
-			break;
+		});
+		break;
 
-		case 'show':
-			new ShowCmd(otherArgs, errorHandler);
-			process.exit(0);
-			break;
-
-		case 'update':
-			git.checkUpdate();
-			process.exit(0);
-			break;
-
-		default:
-			console.log('Usage: dsm [add | rm | show] [args...]');
-			process.exit(0);
-			break;
-	}
-};
-
-checkCommand();
+	default:
+		console.log('Usage: dsm [add | rm | show] [args...]');
+		process.exit(0);
+		break;
+}
