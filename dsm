@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-
 var AddCmd = require('./lib/commands/add'),
 	RmCmd = require('./lib/commands/rm'),
-	ShowCmd = require('./lib/commands/show');
+	ShowCmd = require('./lib/commands/show'),
+	git = require('./lib/git');
 	
 var args = process.argv,
 	cmd = args[2],
@@ -13,22 +13,30 @@ var errorHandler = function(err){
 	process.exit(err.exitCode);
 };
 
-switch(cmd){
-	case 'add':
-		new AddCmd(otherArgs, errorHandler);
-		break;
+var checkCommand = function(){
+	switch(cmd){
+		case 'add':
+			new AddCmd(otherArgs, errorHandler);
+			break;
 
-	case 'rm':
-		new RmCmd(otherArgs, errorHandler);
-		break;
+		case 'rm':
+			new RmCmd(otherArgs, errorHandler);
+			break;
 
-	case 'show':
-		new ShowCmd(otherArgs, errorHandler);
-		break;
+		case 'show':
+			new ShowCmd(otherArgs, errorHandler);
+			break;
 
-	default:
-		console.log('Usage: dsm [add | rm | show] [args...]');
-		break;
-}
+		case 'update':
+			git.checkUpdate();
+			break;
 
-process.exit(0);
+		default:
+			console.log('Usage: dsm [add | rm | show] [args...]');
+			break;
+	}
+
+	process.exit(0);
+};
+
+checkCommand();
