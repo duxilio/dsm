@@ -35,7 +35,9 @@ switch(cmd){
 
 	case 'pull':
 		var statusCode = git.execSecretsCmd('git pull origin master');
-		console.log('Secrets file can be found in '+__dirname+'/secrets/secrets.json');
+		if(statusCode > 0){
+			console.log('Secrets file can be found in '+__dirname+'/secrets/secrets.json');
+		}
 		process.exit(statusCode);
 		break;
 
