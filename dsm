@@ -20,10 +20,12 @@ var cmd = args[2],
 	otherArgs = args.splice(3, args.length);
 
 
+//check dependencies
 utils.checkEnvVars();
 git.checkSecretsRepo();
 
 
+//check version flag
 if(flags.version){
 	console.log('v'+pkg.version);
 	process.exit(0);
