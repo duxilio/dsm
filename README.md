@@ -14,21 +14,19 @@ ENV vars
 	DSM_REMOTE_SECRETS_PATH		the path to the remote secrets repo
 ```
 
+### Installation
+```
+sudo npm i -g https://github.com/duxilio/dsm-cli.git
+```
+
+Whenever you need to update the CLI simply run `dsm update`.
+
 ### Setup
 In order to use the secrets manager you need to configure your master password and the path to the remote secrets git repository. The easiest way to do this is by adding these enviourment variables to your `rc` file.
 ```
 export DSM_PASSWORD="123"
 export DSM_REMOTE_SECRETS_PATH="user@server:/path/to/dsm-secrets.git"
 ```
-
-### Global Command
-If you would like to be able to globally use the `dsm` command then run the following commands.
-```
-git clone git@github.com:duxilio/dsm-cli.git && cd dsm-cli
-sudo npm install -g
-```
-
-Then whenever you need to update the CLI simply run `dsm update`.
 
 ### Secrets Git Repository
 The remote secrets repository is there so you and your colleges are able to sync the passwords between computers. We like to keep the repository in a place as secure as possible by simply creating a barebone Git repo on a server. To create such a repo run the following command in the location where you would like to create the repo on your server.
