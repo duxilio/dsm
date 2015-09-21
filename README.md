@@ -1,11 +1,10 @@
 ```
-Usage: dsm [add | rm | show | update | pull | push] [args...]
+Usage: dsm [add | rm | show | pull | push] [args...]
 
 COMMANDS
 	add <reference> <secret>	encrypts and adds a secret to the manager
 	rm <reference>				removes a secret from the manager
 	show [<reference>]			either shows all encrypted secrets or decrypts and shows a secret
-	update						updates the CLI if an update is available
 	pull						git pulls from the remote secrets repo
 	push						git pushes to the remote secrets repo
 
@@ -20,7 +19,7 @@ If you would like to be able to globally use the `dsm` command then you can inst
 sudo npm i -g dsm-cli
 ```
 
-Then whenever you need to update the CLI simply run `dsm update`.
+Then whenever you need to update the CLI simply run `sudo npm update -g dsm-cli`.
 
 ### Setup
 In order to use the secrets manager you need to configure your master password and the path to the remote secrets git repository. The easiest way to do this is by adding these enviourment variables to your `rc` file.
