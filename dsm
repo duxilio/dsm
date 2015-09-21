@@ -44,20 +44,13 @@ switch(cmd){
 		process.exit(statusCode);
 		break;
 
-	case 'update':
-		git.checkCliUpdate(utils.errorHandler, function(err){
-			process.exit(0);
-		});
-		break;
-
 	default:
-		console.log('Usage: dsm [add | rm | show | update | pull | push] [args...]\n\
+		console.log('Usage: dsm [add | rm | show | pull | push] [args...]\n\
 \n\
 COMMANDS\n\
     add <reference> <secret>    encrypts and adds a secret to the manager\n\
     rm <reference>              removes a secret from the manager\n\
     show [<reference>]          either shows all encrypted secrets or decrypts and shows a secret\n\
-    update                      updates the CLI if an update is available\n\
     pull                        git pulls from the remote secrets repo\n\
     push                        git pushes to the remote secrets repo\n\
 \n\
