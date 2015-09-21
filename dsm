@@ -1,10 +1,7 @@
 #!/usr/bin/env node
 process.chdir(__dirname);
 
-var AddCmd = require('./lib/cmds/add'),
-	RmCmd = require('./lib/cmds/rm'),
-	ShowCmd = require('./lib/cmds/show'),
-	git = require('./lib/git'),
+var git = require('./lib/git'),
 	utils = require('./lib/utils');
 
 var args = process.argv,
@@ -13,6 +10,10 @@ var args = process.argv,
 
 utils.checkEnvVars();
 git.checkSecretsRepo();
+
+var AddCmd = require('./lib/cmds/add'),
+	RmCmd = require('./lib/cmds/rm'),
+	ShowCmd = require('./lib/cmds/show');
 
 switch(cmd){
 	case 'add':
