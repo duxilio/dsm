@@ -33,6 +33,7 @@ export DSM_REMOTE_SECRETS_PATH="user@server:/path/to/dsm-secrets.git"
 The remote secrets repository is there so you and your colleges are able to sync the passwords between computers. We like to keep the repository in a place as secure as possible by simply creating a barebone Git repo on a server. To create such a repo run the following command in the location where you would like to create the repo on your server.
 ```
 mkdir dsm-secrets.git && cd dsm-secrets.git
+echo '{}' > secrets.json
 git init --bare
 ```
 
