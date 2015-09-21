@@ -12,6 +12,7 @@ var args = process.argv,
 	otherArgs = args.splice(3, args.length);
 
 utils.checkEnvVars();
+git.checkSecretsRepo();
 
 switch(cmd){
 	case 'add':
