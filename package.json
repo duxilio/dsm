@@ -1,13 +1,21 @@
 {
   "name": "dsm-cli",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.1.0",
+  "description": "Duxilio Secrets Manager CLI",
+  "main": "./dsm",
+  "keywords": ["dsm", "duxilio secrets manager", "duxilio"],
+  "repository": { "type": "git", "url": "https://github.com/duxilio/dsm-cli" },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Koen Vendrik",
+  "author": "Koen Vendrik <koen@duxilio.com>",
   "license": "BSD-2-Clause",
+  "engines": {
+    "node": ">=0.10"
+  },
+  "bin": {
+    "dsm": "dsm"
+  },
   "dependencies": {
     "crypto": "0.0.3",
     "sync-exec": "^0.6.2",
