@@ -38,7 +38,12 @@ git init --bare
 
 Now the repository is created but it doesn't have a master branch yet. Clone the repo, add the `secrets.json` file and push to the remote repo.
 ```
-git clone user@server:/path/to/dsm-secrets.git && echo '{}' > secrets.json && git add :/ && git commit -m "adds secrets.json" && git push origin master
+git clone user@server:/path/to/dsm-secrets.git
+cd dsm-secrets
+echo '{}' > secrets.json
+git add :/
+git commit -m "adds secrets.json"
+git push origin master
 ```
 
 Now make sure your local enviourment variables are set up to be able to sync with your new repo.
