@@ -14,12 +14,13 @@ ENV vars
 	DSM_REMOTE_SECRETS_PATH		the path to the remote secrets repo
 ```
 
-### Installation
+### Global Installation
+If you would like to be able to globally use the `dsm` command then you can install it globally using `npm`.
 ```
 sudo npm i -g https://github.com/duxilio/dsm-cli.git
 ```
 
-Whenever you need to update the CLI simply run `dsm update`.
+Then whenever you need to update the CLI simply run `dsm update`.
 
 ### Setup
 In order to use the secrets manager you need to configure your master password and the path to the remote secrets git repository. The easiest way to do this is by adding these enviourment variables to your `rc` file.
