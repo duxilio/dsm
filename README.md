@@ -16,10 +16,10 @@ ENV vars
 ### Global Installation
 If you would like to be able to globally use the `dsm` command then you can install it globally using `npm`.
 ```
-sudo npm i -g dsm-cli
+npm i -g dsm-cli
 ```
 
-Then whenever you need to update the CLI simply run `sudo npm update -g dsm-cli`.
+Then whenever you need to update the CLI simply run `npm update -g dsm-cli`.
 
 ### Setup
 In order to use the secrets manager you need to configure your master password and the path to the remote secrets git repository. The easiest way to do this is by adding these enviourment variables to your `rc` file.
