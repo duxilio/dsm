@@ -17,7 +17,7 @@ ENV vars
 ### Global Installation
 If you would like to be able to globally use the `dsm` command then you can install it globally using `npm`.
 ```
-sudo npm i -g https://github.com/duxilio/dsm-cli.git
+sudo npm i -g dsm-cli
 ```
 
 Then whenever you need to update the CLI simply run `dsm update`.
