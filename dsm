@@ -1,15 +1,36 @@
 #!/usr/bin/env node
 process.chdir(__dirname);
 
-var git = require('./lib/git'),
-	utils = require('./lib/utils');
+var pkg = require('./package'),
+	git = require('./lib/git'),
+	utils = require('./lib/utils'),
+	Parser = require('./lib/Parser');
 
-var args = process.argv,
-	cmd = args[2],
+var argv = process.argv,
+	parser = new Parser(argv),
+	flags = parser.parseFlags({
+		version: {
+			keys: ['-v', '--version'],
+			action: 'store_bool'
+		}
+	}),
+	args = parser.getCleanArgs();
+
+var cmd = args[2],
 	otherArgs = args.splice(3, args.length);
 
+
+//check dependencies
 utils.checkEnvVars();
 git.checkSecretsRepo();
+
+
+//check version flag
+if(flags.version){
+	console.log('v'+pkg.version);
+	process.exit(0);
+}
+
 
 var AddCmd = require('./lib/cmds/add'),
 	RmCmd = require('./lib/cmds/rm'),
