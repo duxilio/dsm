@@ -13,15 +13,13 @@ ENV vars
 	DSM_REMOTE_SECRETS_PATH		the path to the remote secrets repo
 ```
 
-### Global Installation
-If you would like to be able to globally use the `dsm` command then you can install it globally using `npm`.
+### Setup
+
+#### \#1. Installation
 ```
 npm i -g dsm-cli
 ```
-
-Then whenever you need to update the CLI simply run `npm update -g dsm-cli`.
-
-### Setup
+#### \#2. Environment Variables
 In order to use the secrets manager you need to configure your master password and the path to the remote secrets git repository. The easiest way to do this is by adding these enviourment variables to your `rc` file.
 ```
 export DSM_PASSWORD="123"
