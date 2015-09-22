@@ -1,6 +1,6 @@
 {
   "name": "dsm-cli",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Duxilio Secrets Manager CLI",
   "main": "./dsm",
   "keywords": ["dsm", "duxilio secrets manager", "duxilio"],
