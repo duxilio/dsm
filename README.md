@@ -51,3 +51,15 @@ export DSM_REMOTE_SECRETS_PATH="user@server:/path/to/dsm-secrets.git"
 ```
 
 In case your server doesn't have Git you can also create the repo locally and then `scp` or `rsync` it to your server.
+
+### Troubleshooting
+
+#### Secrets Permission Denied
+```
+Secrets repository not available locally. Trying to clone user@server:/path/to/dsm-secrets.git...
+ fatal: could not create work tree dir 'secrets'.: Permission denied
+```
+You probably installed the package using `sudo` which means it's owned by the `sudo` user. This can be fixed by changing the owner of the `dsm-cli` package back to your user.
+```
+sudo chown -R $USER /usr/local/lib/node_modules/dsm-cli
+```
