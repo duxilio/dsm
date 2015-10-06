@@ -2,15 +2,18 @@
 Usage: dsm [add | rm | show | pull | push] [args...]
 
 COMMANDS
-	add <reference> <secret>	encrypts and adds a secret to the manager
-	rm <reference>				removes a secret from the manager
-	show [<reference>]			either shows all encrypted secrets or decrypts and shows a secret
-	pull						git pulls from the remote secrets repo
-	push						git pushes to the remote secrets repo
+    add <reference> <secret> [<fields...>]  encrypts and adds a secret to the manager
+                                            next to the main secret/field you can optionally
+                                            also add other fields using the NAME=VALUE syntax
+                                            e.g. dsm add kitten.io secretstr user=kitten token=123
+    rm <reference>                          removes a secret from the manager
+    show [<reference>] [<field>]            either shows all encrypted secrets or decrypts and shows a specific secret
+    pull                                    git pulls from the remote secrets repo
+    push                                    git pushes to the remote secrets repo
 
 ENV vars
-	DSM_PASSWORD				the master password
-	DSM_REMOTE_SECRETS_PATH		the path to the remote secrets repo
+    DSM_PASSWORD                            the master password
+    DSM_REMOTE_SECRETS_PATH                 the path to the remote secrets repo
 ```
 
 ### Global Installation

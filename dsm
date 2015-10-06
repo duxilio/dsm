@@ -2,22 +2,22 @@
 process.chdir(__dirname);
 
 var pkg = require('./package'),
-	git = require('./lib/git'),
-	utils = require('./lib/utils'),
-	Parser = require('./lib/Parser');
+    git = require('./lib/git'),
+    utils = require('./lib/utils'),
+    Parser = require('./lib/Parser');
 
 var argv = process.argv,
-	parser = new Parser(argv),
-	flags = parser.parseFlags({
-		version: {
-			keys: ['-v', '--version'],
-			action: 'store_bool'
-		}
-	}),
-	args = parser.getCleanArgs();
+    parser = new Parser(argv),
+    flags = parser.parseFlags({
+        version: {
+            keys: ['-v', '--version'],
+            action: 'store_bool'
+        }
+    }),
+    args = parser.getCleanArgs();
 
 var cmd = args[2],
-	otherArgs = args.splice(3, args.length);
+    otherArgs = args.splice(3, args.length);
 
 
 //check dependencies
@@ -27,59 +27,62 @@ git.checkSecretsRepo();
 
 //check version flag
 if(flags.version){
-	console.log('v'+pkg.version);
-	process.exit(0);
+    console.log('v'+pkg.version);
+    process.exit(0);
 }
 
 
 var AddCmd = require('./lib/cmds/add'),
-	RmCmd = require('./lib/cmds/rm'),
-	ShowCmd = require('./lib/cmds/show');
+    RmCmd = require('./lib/cmds/rm'),
+    ShowCmd = require('./lib/cmds/show');
 
 switch(cmd){
-	case 'add':
-		new AddCmd(otherArgs, utils.errorHandler, function(exitCode){
-			process.exit(exitCode);
-		});
-		break;
+    case 'add':
+        new AddCmd(otherArgs, utils.errorHandler, function(exitCode){
+            process.exit(exitCode);
+        });
+        break;
 
-	case 'rm':
-		new RmCmd(otherArgs, utils.errorHandler, function(exitCode){
-			process.exit(exitCode);
-		});
-		break;
+    case 'rm':
+        new RmCmd(otherArgs, utils.errorHandler, function(exitCode){
+            process.exit(exitCode);
+        });
+        break;
 
-	case 'show':
-		new ShowCmd(otherArgs, utils.errorHandler);
-		process.exit(0);
-		break;
+    case 'show':
+        new ShowCmd(otherArgs, utils.errorHandler);
+        process.exit(0);
+        break;
 
-	case 'pull':
-		var statusCode = git.execSecretsCmd('git pull origin master');
-		if(statusCode > 0){
-			console.log('Secrets file can be found in '+__dirname+'/secrets/secrets.json');
-		}
-		process.exit(statusCode);
-		break;
+    case 'pull':
+        var statusCode = git.execSecretsCmd('git pull origin master');
+        if(statusCode > 0){
+            console.log('Secrets file can be found in '+__dirname+'/secrets/secrets.json');
+        }
+        process.exit(statusCode);
+        break;
 
-	case 'push':
-		var statusCode = git.execSecretsCmd('git add :/ && git commit -m "updates secrets.json" && git push origin master');
-		process.exit(statusCode);
-		break;
+    case 'push':
+        var statusCode = git.execSecretsCmd('git add :/ && git commit -m "updates secrets.json" && git push origin master');
+        process.exit(statusCode);
+        break;
 
-	default:
-		console.log('Usage: dsm [add | rm | show | pull | push] [args...]\n\
+    default:
+        console.log('Usage: dsm [add | rm | show | pull | push] [args...]\n\
 \n\
 COMMANDS\n\
-    add <reference> <secret>    encrypts and adds a secret to the manager\n\
-    rm <reference>              removes a secret from the manager\n\
-    show [<reference>]          either shows all encrypted secrets or decrypts and shows a secret\n\
-    pull                        git pulls from the remote secrets repo\n\
-    push                        git pushes to the remote secrets repo\n\
+    add <reference> <secret> [<fields...>]  encrypts and adds a secret to the manager\n\
+                                            next to the main secret/field you can optionally\n\
+                                            also add other fields using the NAME=VALUE syntax\n\
+                                            e.g. dsm add kitten.io secretstr user=kitten token=123\n\
+    rm <reference>                          removes a secret from the manager\n\
+    show [<reference>] [<field>]            either shows all encrypted secrets or decrypts and shows a specific secret\n\
+    pull                                    git pulls from the remote secrets repo\n\
+    push                                    git pushes to the remote secrets repo\n\
 \n\
 ENV vars\n\
-    DSM_PASSWORD                the master password\n\
-    DSM_REMOTE_SECRETS_PATH     the path to the remote secrets repo');
-		process.exit(0);
-		break;
+    DSM_PASSWORD                            the master password\n\
+    DSM_REMOTE_SECRETS_PATH                 the path to the remote secrets repo');
+        process.exit(0);
+        break;
 }
