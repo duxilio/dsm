@@ -16,15 +16,13 @@ ENV vars
     DSM_REMOTE_SECRETS_PATH                 the path to the remote secrets repo
 ```
 
-### Global Installation
-If you would like to be able to globally use the `dsm` command then you can install it globally using `npm`.
+### Setup
+
+#### \#1. Installation
 ```
 npm i -g dsm-cli
 ```
-
-Then whenever you need to update the CLI simply run `npm update -g dsm-cli`.
-
-### Setup
+#### \#2. Environment Variables
 In order to use the secrets manager you need to configure your master password and the path to the remote secrets git repository. The easiest way to do this is by adding these enviourment variables to your `rc` file.
 ```
 export DSM_PASSWORD="123"
@@ -54,3 +52,15 @@ export DSM_REMOTE_SECRETS_PATH="user@server:/path/to/dsm-secrets.git"
 ```
 
 In case your server doesn't have Git you can also create the repo locally and then `scp` or `rsync` it to your server.
+
+### Troubleshooting
+
+#### Secrets Permission Denied
+```
+Secrets repository not available locally. Trying to clone user@server:/path/to/dsm-secrets.git...
+ fatal: could not create work tree dir 'secrets'.: Permission denied
+```
+You probably installed the package using `sudo` which means it's owned by the `sudo` user. This can be fixed by changing the owner of the `dsm-cli` package back to your user.
+```
+sudo chown -R $USER /usr/local/lib/node_modules/dsm-cli
+```
